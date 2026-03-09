@@ -1,9 +1,11 @@
 import { use, useActionState } from "react";
 import { z, ZodError } from "zod"
+import { AxiosError } from "axios"
+
+import { api } from "../services/api"
 
 import { Input } from "../components/Input";
 import { Button } from "../components/Button";
-import { email } from "zod";
 
 const signInSchema = z.object({
   email: z.string().email({ message: "Informe um e-mail válido"}),
@@ -19,11 +21,19 @@ export function SignIn() {
         email: formData.get("email"),
         password: formData.get("password")
       })
+
+      const response = await api.post("/sessions", data)
+      console.log(response.data)
+
     } catch(error) {
       console.log(error)
 
       if(error instanceof ZodError) {
         return { message: error.issues[0].message }
+      }
+
+      if(error instanceof AxiosError) {
+        return { message: error.response?.data.message }
       }
 
       return alert("Não foi possivel entrar!")
