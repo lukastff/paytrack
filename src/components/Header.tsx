@@ -1,0 +1,22 @@
+import logo from "../assets/logo.png";
+import logoutSvg from "../assets/logout.svg";
+
+export function Header() {
+  return (
+    <header className="w-full flex justify-between">
+      <img src={logo} alt="Logo" className="my-8 w-[102px]" />
+
+      <div className="flex items-center gap-3">
+        <span className="text-sm font-semibold text-gray-200">
+          Olá, Rodrigo
+        </span>
+
+        <img
+          src={logoutSvg}
+          alt="Ícone de sair"
+          className="my-8 cursor-pointer hover:opacity-75 transition ease-linear"
+        />
+      </div>
+    </header>
+  );
+}
